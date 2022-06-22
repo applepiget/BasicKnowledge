@@ -109,7 +109,14 @@ int main()
 1. 用到了小根堆
 
    ```c++
-   priority_queue<int , vector<int> , greater<int>> heap;
-   ```
-
+   priority_queue<int , vector<int> , greater<int>> heap;//小根堆
+   priority_queue<int>//默认是大根堆，大的元素会放在前面
+```
    
+   用**priority_queue**实现小根堆的方法如下
+   
+   1. 将所有元素取负
+   2. 直接用STL中的小根堆，如上代码
+
+2. > priority_queue允许用户为[队列](https://so.csdn.net/so/search?q=队列&spm=1001.2101.3001.7020)中元素设置优先级，放置元素的时候不是直接放到队尾，而是放置到比它优先级低的元素前面，标准库默认使用<操作符来确定优先级关系。
+
