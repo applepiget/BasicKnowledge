@@ -67,3 +67,69 @@ int main()
 }
 ```
 
+```c++
+//845.八数码
+#include <iostream>
+#include <queue>
+#include <unordered_map>
+#include <algorithm>
+
+using namespace std;
+
+int bfs(string start)
+{
+    string end = "12345678x";                                   //需要搜索的状态
+    queue<string> q;                                            //存放每个状态的网格
+    unordered_map<string , int> dis;                            //存放每个状态已经经过的距离
+    int dx[4] = {0 , 1 , 0 , -1} , dy[4] = {-1 , 0 , 1 , 0};    //上右下左
+    
+    q.push(start);
+    dis[start] = 0;
+    
+    while(!q.empty())
+    {
+        auto t = q.front();
+        q.pop();
+        
+        int distance = dis[t];
+        
+        if(t == end)
+            return distance;
+        
+        //状态改变
+        int k = t.find('x');                                    //找到当前状态中x的位置
+        int x = k / 3 , y = k % 3;                              //将其对应到字符串当中的位置
+        
+        for(int i = 0 ; i < 4 ; i ++)
+        {
+            int a = x + dx[i] , b = y + dy[i];
+            if(a >= 0 && b >= 0 && a < 3 && b < 3)
+            {
+                swap(t[k] , t[a * 3 + b]);
+                if(!dis.count(t))                                 //如过没有走到过这个位置
+                {
+                    dis[t] = distance + 1;
+                    q.push(t);
+                }
+                swap(t[k] , t[a * 3 + b]);
+            }
+        }
+    }
+    return -1;
+}
+
+int main()
+{
+    string start;
+    for(int i = 0 ; i < 9 ; i ++)
+    {
+        char c;
+        cin >> c;
+        start += c;
+    }
+    
+    cout << bfs(start) << endl;
+    return 0;
+}
+```
+
